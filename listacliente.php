@@ -3,6 +3,7 @@
         <meta charset="UTF-8">
         <title>Proyecto</title>
         <link href="css/globalCSS.css" rel="stylesheet" style type="text/css">
+        <script src="jquery-3.2.1.min.js"></script>
     </head>
     <body>   
     <?php 
@@ -25,37 +26,22 @@
                 </ul>
             </nav>
             <div class="mt-Cuerpo"><br><br>
-        <?php
-        echo"<marquee direction=''><img src='imagenes/images'/ width='300' align='left'></marquee>";
-        echo '<h1>Listado de Cliente</h1>';
-        require("conexion.php");      
-        $rst = $mysqli->query("select * from cliente");                
-        echo '<table align="center" border="4" width="60%">';
-        echo '<th>Cedula</th>';
-        echo '<th>Nombre</th>';
-        echo '<th>Apellido</th>';
-        echo '<th>Direccion</th>';
-        echo '<th>Telefono</th>';
-        while ($fila = $rst->fetch_assoc()) {
-            echo '<tr>';
-            echo '<td>';
-            print ($fila['id']);
-            echo '</td>';
-            echo '<td>';
-            print ($fila['nombre']);
-            echo '</td>';
-            echo '<td>';
-            print ($fila['apellido']);
-            echo '</td>';
-            echo '<td>';
-            print ($fila['direccion']);
-            echo '</td>';
-            echo '<td>';
-            print ($fila['telefono']);
-            echo '</td>';
-            echo '</tr>';
-        }
-        ?>
+            <div id="consultar">
+                <section class="widget">
+                    <h4 class="widgettitulo">Lista de Clientes</h4>
+                    <div class="consul" id="consul">
+                        
+                    </div>
+                </section>
+                
+            </div>
+                <marquee direction=''><img src='imagenes/images'/ width='300' align='left'></marquee>
         </div>
     </body>
 </html>
+<script type="text/javascript">
+        $.ajax({
+            url:"querys.php?accion=selectDatos",
+            data:$('#consul')
+        });
+</script>

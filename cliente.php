@@ -3,6 +3,7 @@
         <meta charset="UTF-8">
         <link href="css/globalCSS.css" rel="stylesheet" style type="text/css">
         <title>Cliente</title>
+        <script src="jquery-3.2.1.min.js"></script>
     </head>
     <body>
         <?php
@@ -27,7 +28,7 @@
             </nav>
             
         <div style="margin-left:5%"><br><br><br><br><br><br><br><br>
-        <form action="cliente.php" method="post">
+        <form id="ingreso" action="cliente.php" method="post">
         <p>
         <label style="margin-left">CEDULA:</label> <input type="text" name="id" style="margin-left:2%"><br><br>
         </p>
@@ -38,24 +39,30 @@
          <label style="margin-left">APELLIDO:</label><input type="text" name="apellido" style="margin-left:1%"><br><br>
         DIRECCION:<input type="text" name="direccion" style="margin-left:0.5%"><br><br>
         TELEFONO:<input type="text" name="telefono" style="margin-left:1%"><br><br>
-        <input type="submit" value="Insertar">
+        <input id="btnguardar" type="submit" value="Insertar">
         <marquee direction=""><img src="imagenes/images"/ width="300" align="right"></marquee>
         </form>
-    </div>
-        <?php
-    include("conexion.php");
-
-    if(isset($_POST['id']) &&     !empty($_POST['id']) &&
-       isset($_POST['nombre']) && !empty($_POST['nombre'])&&
-       isset($_POST['apellido']) && !empty($_POST['apellido'])&&
-       isset($_POST['direccion']) && !empty($_POST['direccion'])&&
-       isset($_POST['telefono']) && !empty($_POST['telefono'])) {
-        $con=mysqli_connect($host,$user,$pw,$bd);
-        mysqli_query($con,("insert into cliente(id,nombre,apellido,direccion,telefono) values('$_POST[id]','$_POST[nombre]','$_POST[apellido]','$_POST[direccion]','$_POST[telefono]')"));
-        echo "Datos insertados";
-    }else{
-    }
-
-?>   
+    </div>   
     </body>
 </html>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#btnguardar').click(function(){
+            //var datos=$('#ingreso').serialize();
+            $.ajax({
+                type:"POST",
+                url:"querys.php?accion=insertarDatos",
+                data:$('#ingreso').serialize(),
+                success:function(a){
+                    if(a==1){
+                        alert("agregado con exito");
+                    }else{
+                        alert("Fallo el server");
+                    }
+                }
+            });
+
+            return false;
+        });
+    });
+</script>

@@ -36,6 +36,42 @@
             break;
                 
         }
-        
+        case 'insertarDatos':
+        if(isset($_REQUEST['accion']) && $_REQUEST['accion'] == 'insertarDatos') {
+        $conexion=mysqli_connect('localhost','root','','pquinde');
+
+        $id=$_POST['id'];
+        $nombre=$_POST['nombre'];
+        $apellido=$_POST['apellido'];
+        $direccion=$_POST['direccion'];
+        $telefono=$_POST['telefono'];
+
+        $sql="insert into cliente(id,nombre,apellido,direccion,telefono)
+              values('$id','$nombre','$apellido','$direccion','$telefono')";
+        echo mysqli_query($conexion,$sql);
     }
+    case 'selectDatos':
+    if(isset($_REQUEST['accion']) && $_REQUEST['accion'] == 'selectDatos') {
+        $rst = $mysqli->query("select * from cliente");                
+        while ($fila = $rst->fetch_assoc()) {
+            echo '<tr>';
+            echo '<td>';
+            print ($fila['id']);
+            echo '</td>';
+            echo '<td>';
+            print ($fila['nombre']);
+            echo '</td>';
+            echo '<td>';
+            print ($fila['apellido']);
+            echo '</td>';
+            echo '<td>';
+            print ($fila['direccion']);
+            echo '</td>';
+            echo '<td>';
+            print ($fila['telefono']);
+            echo '</td>';
+            echo '</tr>';
+        }
+    }
+}
 ?>
